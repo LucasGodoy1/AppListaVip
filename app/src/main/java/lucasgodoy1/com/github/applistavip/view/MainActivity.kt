@@ -1,6 +1,7 @@
 package lucasgodoy1.com.github.applistavip.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 
 import android.widget.EditText
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         idBtnSalvar.setOnClickListener(View.OnClickListener {
             pessoa = Pessoa(idNome.text.toString(), idSobrenome.text.toString(),idCursoInt.text.toString(), idTelefone.text.toString()  )
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
-
+            Log.i("Seu Objeto --->",pessoa.toString() )
         })
 
         idBtnFinalizar.setOnClickListener(View.OnClickListener {
