@@ -1,6 +1,7 @@
 package lucasgodoy1.com.github.applistavip.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 
 import android.widget.EditText
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import lucasgodoy1.com.github.applistavip.R
+import lucasgodoy1.com.github.applistavip.controller.PessoaController
 import lucasgodoy1.com.github.applistavip.model.Pessoa
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity() {
   lateinit var  idBtnSalvar : AppCompatButton
 
   lateinit var  pessoa : Pessoa
+
+  var pessoaController = PessoaController()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         idBtnSalvar.setOnClickListener(View.OnClickListener {
             pessoa = Pessoa(idNome.text.toString(), idSobrenome.text.toString(),idCursoInt.text.toString(), idTelefone.text.toString()  )
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
+
+            pessoaController.salvar(pessoa)
 
         })
 
