@@ -15,16 +15,16 @@ import lucasgodoy1.com.github.applistavip.R
 import lucasgodoy1.com.github.applistavip.model.Pessoa
 
 class MainActivity : AppCompatActivity() {
-  lateinit var  idNome : EditText
-  lateinit var  idSobrenome : EditText
-  lateinit var  idCursoInt : EditText
-  lateinit var  idTelefone : EditText
+    lateinit var idNome: EditText
+    lateinit var idSobrenome: EditText
+    lateinit var idCursoInt: EditText
+    lateinit var idTelefone: EditText
 
-  lateinit var  idBtnFinalizar : AppCompatButton
-  lateinit var  idBtnLimpar : AppCompatButton
-  lateinit var  idBtnSalvar : AppCompatButton
+    lateinit var idBtnFinalizar: AppCompatButton
+    lateinit var idBtnLimpar: AppCompatButton
+    lateinit var idBtnSalvar: AppCompatButton
 
-  lateinit var  pessoa : Pessoa
+    lateinit var pessoa: Pessoa
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,9 +56,14 @@ class MainActivity : AppCompatActivity() {
         })
 
         idBtnSalvar.setOnClickListener(View.OnClickListener {
-            pessoa = Pessoa(idNome.text.toString(), idSobrenome.text.toString(),idCursoInt.text.toString(), idTelefone.text.toString()  )
+            pessoa = Pessoa(
+                idNome.text.toString(),
+                idSobrenome.text.toString(),
+                idCursoInt.text.toString(),
+                idTelefone.text.toString()
+            )
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
-            Log.i("Seu Objeto --->",pessoa.toString() )
+            Log.i("Seu Objeto --->", pessoa.toString())
         })
 
         idBtnFinalizar.setOnClickListener(View.OnClickListener {
