@@ -1,7 +1,7 @@
 package lucasgodoy1.com.github.applistavip.view
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 
 import android.widget.EditText
@@ -16,24 +16,33 @@ import lucasgodoy1.com.github.applistavip.controller.PessoaController
 import lucasgodoy1.com.github.applistavip.model.Pessoa
 
 class MainActivity : AppCompatActivity() {
-  lateinit var  idNome : EditText
-  lateinit var  idSobrenome : EditText
-  lateinit var  idCursoInt : EditText
-  lateinit var  idTelefone : EditText
+    lateinit var idNome: EditText
+    lateinit var idSobrenome: EditText
+    lateinit var idCursoInt: EditText
+    lateinit var idTelefone: EditText
 
-  lateinit var  idBtnFinalizar : AppCompatButton
-  lateinit var  idBtnLimpar : AppCompatButton
-  lateinit var  idBtnSalvar : AppCompatButton
+    lateinit var idBtnFinalizar: AppCompatButton
+    lateinit var idBtnLimpar: AppCompatButton
+    lateinit var idBtnSalvar: AppCompatButton
 
-  lateinit var  pessoa : Pessoa
+    lateinit var pessoa: Pessoa
 
-  var pessoaController = PessoaController()
+    lateinit var preferences: SharedPreferences
+
+    val NOME_PREFERENCES : String = "pref_listaVip"
+
+    var pessoaController = PessoaController()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        preferences = getSharedPreferences(NOME_PREFERENCES, 0)
+        var listaVip = preferences.edit()
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -59,11 +68,22 @@ class MainActivity : AppCompatActivity() {
         })
 
         idBtnSalvar.setOnClickListener(View.OnClickListener {
-            pessoa = Pessoa(idNome.text.toString(), idSobrenome.text.toString(),idCursoInt.text.toString(), idTelefone.text.toString()  )
+            pessoa = Pessoa(
+                idNome.text.toString(),
+                idSobrenome.text.toString(),
+                idCursoInt.text.toString(),
+                idTelefone.text.toString()
+            )
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
 
             pessoaController.salvar(pessoa)
 
+            listaVip.putString("PrimeiroNome", pessoa.primeiroNome)
+            listaVip.putString("SegundoNome", pessoa.segundoNome)
+            listaVip.putString("Nome do curso", pessoa.cursoDeImteresse)
+            listaVip.putString("Telefone de contato", pessoa.telefoneContato)
+
+            listaVip.apply()
         })
 
         idBtnFinalizar.setOnClickListener(View.OnClickListener {
