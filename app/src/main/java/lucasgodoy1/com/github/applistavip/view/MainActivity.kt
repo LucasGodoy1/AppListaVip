@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var preferences: SharedPreferences
 
+    lateinit var listaVip : SharedPreferences.Editor
+
     val NOME_PREFERENCES : String = "pref_listaVip"
 
     var pessoaController = PessoaController()
@@ -40,7 +42,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         preferences = getSharedPreferences(NOME_PREFERENCES, 0)
-        var listaVip = preferences.edit()
+
+        listaVip = preferences.edit()
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -65,6 +68,9 @@ class MainActivity : AppCompatActivity() {
             idSobrenome.setText("")
             idCursoInt.setText("")
             idTelefone.setText("")
+
+            listaVip.clear()
+            listaVip.apply()
         })
 
         idBtnSalvar.setOnClickListener(View.OnClickListener {
