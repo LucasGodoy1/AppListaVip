@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity() {
             )
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
 
-            pessoaController.salvar(pessoa)
 
             listaVip.putString("PrimeiroNome", pessoa.primeiroNome)
             listaVip.putString("SegundoNome", pessoa.segundoNome)
@@ -84,6 +83,16 @@ class MainActivity : AppCompatActivity() {
             listaVip.putString("Telefone de contato", pessoa.telefoneContato)
 
             listaVip.apply()
+
+            var pessoaDoArquivoPreference = Pessoa(
+                preferences.getString("PrimeiroNome", "") ?: "",
+                preferences.getString("SegundoNome", "") ?: "",
+                preferences.getString("Nome do curso", "") ?: "",
+                preferences.getString("Telefone de contato", "") ?: ""
+            )
+
+            pessoaController.salvar(pessoaDoArquivoPreference)
+
         })
 
         idBtnFinalizar.setOnClickListener(View.OnClickListener {
