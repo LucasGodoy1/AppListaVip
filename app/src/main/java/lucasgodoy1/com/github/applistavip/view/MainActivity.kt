@@ -1,6 +1,5 @@
 package lucasgodoy1.com.github.applistavip.view
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 
@@ -23,17 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var idBtnFinalizar: AppCompatButton
     lateinit var idBtnLimpar: AppCompatButton
-    lateinit var idBtnSalvar: AppCompatButton
+    lateinit var idBtnColetarInfo: AppCompatButton
 
     lateinit var pessoa: Pessoa
-
-    lateinit var preferences: SharedPreferences
-
-    lateinit var listaVip : SharedPreferences.Editor
-
-    val NOME_PREFERENCES : String = "pref_listaVip"
-
-    var pessoaController = PessoaController()
+    lateinit var pessoaController : PessoaController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +33,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        preferences = getSharedPreferences(NOME_PREFERENCES, 0)
-
-        listaVip = preferences.edit()
-
+        pessoaController = PessoaController(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -57,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         idCursoInt = findViewById(R.id.idAndroidCursoInt)
         idTelefone = findViewById(R.id.idAndroidTel)
 
-        idBtnSalvar = findViewById(R.id.idAndroidBtnSal)
+        idBtnColetarInfo = findViewById(R.id.idAndroidBtnSal)
         idBtnLimpar = findViewById(R.id.idAndroidBtnLimp)
         idBtnFinalizar = findViewById(R.id.idAndroidBtnFinalizar)
 
@@ -69,35 +58,32 @@ class MainActivity : AppCompatActivity() {
             idCursoInt.setText("")
             idTelefone.setText("")
 
-            listaVip.clear()
-            listaVip.apply()
+            pessoaController.limpar()
+
         })
 
-        idBtnSalvar.setOnClickListener(View.OnClickListener {
+
+
+        idBtnColetarInfo.setOnClickListener(View.OnClickListener {
             pessoa = Pessoa(
                 idNome.text.toString(),
                 idSobrenome.text.toString(),
                 idCursoInt.text.toString(),
                 idTelefone.text.toString()
             )
+
+            pessoaController.salvar(pessoa)
+
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
 
+//            var pessoaDoArquivoPreference = Pessoa(
+//                preferences.getString("PrimeiroNome", "") ?: "",
+//                preferences.getString("SegundoNome", "") ?: "",
+//                preferences.getString("Nome do curso", "") ?: "",
+//                preferences.getString("Telefone de contato", "") ?: ""
+//            )
 
-            listaVip.putString("PrimeiroNome", pessoa.primeiroNome)
-            listaVip.putString("SegundoNome", pessoa.segundoNome)
-            listaVip.putString("Nome do curso", pessoa.cursoDeImteresse)
-            listaVip.putString("Telefone de contato", pessoa.telefoneContato)
-
-            listaVip.apply()
-
-            var pessoaDoArquivoPreference = Pessoa(
-                preferences.getString("PrimeiroNome", "") ?: "",
-                preferences.getString("SegundoNome", "") ?: "",
-                preferences.getString("Nome do curso", "") ?: "",
-                preferences.getString("Telefone de contato", "") ?: ""
-            )
-
-            pessoaController.salvar(pessoaDoArquivoPreference)
+//            pessoaController.salvar(pessoaDoArquivoPreference)
 
         })
 
