@@ -2,8 +2,10 @@ package lucasgodoy1.com.github.applistavip.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import lucasgodoy1.com.github.applistavip.R
+import lucasgodoy1.com.github.applistavip.controller.CursoController
 import lucasgodoy1.com.github.applistavip.controller.PessoaController
 import lucasgodoy1.com.github.applistavip.model.Pessoa
 
@@ -26,6 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var pessoa: Pessoa
     lateinit var pessoaController : PessoaController
+
+    val cursoController = CursoController()
+    lateinit var idSpiner : Spinner
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,21 +82,21 @@ class MainActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Salvo: $pessoa", Toast.LENGTH_LONG).show()
 
-//            var pessoaDoArquivoPreference = Pessoa(
-//                preferences.getString("PrimeiroNome", "") ?: "",
-//                preferences.getString("SegundoNome", "") ?: "",
-//                preferences.getString("Nome do curso", "") ?: "",
-//                preferences.getString("Telefone de contato", "") ?: ""
-//            )
-
-//            pessoaController.salvar(pessoaDoArquivoPreference)
-
         })
 
         idBtnFinalizar.setOnClickListener(View.OnClickListener {
             Toast.makeText(this, "Volte Sempre", Toast.LENGTH_LONG).show()
             finish()
         })
+
+        idSpiner = findViewById(R.id.idSpinerCurso)
+
+        var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cursoController.getListaParaSpiner())
+
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1)
+
+        idSpiner.adapter = adapter
+
     }
 
 
