@@ -9,18 +9,18 @@ import lucasgodoy1.com.github.applistavip.model.ComponenteDeTela
 import lucasgodoy1.com.github.applistavip.model.Pessoa
 import lucasgodoy1.com.github.applistavip.view.MainActivity
 
-class PessoaController ( private val mainActivity: MainActivity){
+class PessoaController(private val mainActivity: MainActivity) {
 
-    var NOME_PREFERENCES : String = "pref_Arquivo_listaVip"
+    var NOME_PREFERENCES: String = "pref_Arquivo_listaVip"
     var preferences = mainActivity.getSharedPreferences(NOME_PREFERENCES, 0)
-    var listaVip : SharedPreferences.Editor = preferences.edit()
+    var listaVip: SharedPreferences.Editor = preferences.edit()
 
     val componenteDeTela = ComponenteDeTela(mainActivity)
     lateinit var pessoa: Pessoa
     var cursoController = CursoController()
 
 
-    fun iniciarComponentes(){
+    fun iniciarComponentes() {
         buscar()
         salvar()
         finalizar()
@@ -29,7 +29,7 @@ class PessoaController ( private val mainActivity: MainActivity){
     }
 
 
-    fun buscar( ){
+    fun buscar() {
         val primeiroNome = preferences.getString("PrimeiroNome", "N/A")
         val segundoNome = preferences.getString("SegundoNome", "N/A")
         val nomeDoCurso = preferences.getString("NomeDocurso", "N/A")
@@ -42,7 +42,7 @@ class PessoaController ( private val mainActivity: MainActivity){
 
     }
 
-    fun limpar(){
+    fun limpar() {
         componenteDeTela.idBtnLimpar.setOnClickListener(View.OnClickListener {
             componenteDeTela.idNome.setText("")
             componenteDeTela.idSobrenome.setText("")
@@ -54,7 +54,6 @@ class PessoaController ( private val mainActivity: MainActivity){
         listaVip.clear()
         listaVip.apply()
     }
-
 
 
     fun salvar() {
@@ -77,15 +76,19 @@ class PessoaController ( private val mainActivity: MainActivity){
 
     }
 
-    fun finalizar(){
+    fun finalizar() {
         componenteDeTela.idBtnFinalizar.setOnClickListener(View.OnClickListener {
             Toast.makeText(mainActivity, "Volte Sempre", Toast.LENGTH_LONG).show()
             mainActivity.finish()
         })
     }
 
-    fun spinner(){
-        var adapter = ArrayAdapter<String>(mainActivity, android.R.layout.simple_list_item_1, cursoController.getListaParaSpiner())
+    fun spinner() {
+        var adapter = ArrayAdapter<String>(
+            mainActivity,
+            android.R.layout.simple_list_item_1,
+            cursoController.getListaParaSpiner()
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1)
         componenteDeTela.idSpiner.adapter = adapter
     }
